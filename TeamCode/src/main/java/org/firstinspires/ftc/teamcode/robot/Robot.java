@@ -8,7 +8,7 @@ public class Robot {
     public DcMotor frontLeftDrive;
     public DcMotor frontRightDrive;
     public DcMotor backLeftDrive;
-    public DcMotor backrightDrive;
+    public DcMotor backRightDrive;
 
     public Robot() {}
 
