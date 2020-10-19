@@ -37,6 +37,19 @@ public class OneController extends OpMode {
 
         // Set the power of each motor to the values calculated above (very obscure)
         drive.setMotorPowers(leftFront, leftRear, rightRear, rightFront);
+
+        /*
+        it would be nice to know what this means
+        my guess: left stick is forward/backward/left/right movement and right stick is turning
+                  because blah blah blah x, y, rotation
+        drive.setWeightedDrivePower(
+            new Pose2d(
+                -gamepad1.left_stick_y,
+                -gamepad1.left_stick_x,
+                -gamepad1.right_stick_x
+            )
+        );
+        */
     }
 
     @Override
