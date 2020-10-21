@@ -8,15 +8,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.ArcturusMecanumDrive;
+import org.firstinspires.ftc.teamcode.util.RingStackHeight;
 
 @Autonomous(group = "drive")
 public class PewPew extends LinearOpMode {
-    enum RingStackHeight {
-        ZERO,
-        ONE,
-        FOUR,
-    }
-
     @Override
     public void runOpMode() throws InterruptedException {
         ArcturusMecanumDrive drive = new ArcturusMecanumDrive(hardwareMap);
