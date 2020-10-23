@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.drive.opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.drive.ArcturusMecanumDrive;
@@ -14,10 +15,12 @@ import org.firstinspires.ftc.teamcode.drive.ArcturusMecanumDrive;
 @TeleOp(group = "drive")
 public class OneController extends OpMode {
     private ArcturusMecanumDrive drive;
+    private Servo intake;
 
     @Override
     public void init() {
         drive = new ArcturusMecanumDrive(hardwareMap);
+        intake = hardwareMap.get(Servo.class, "intake");
 
         telemetry.addData("statuis", "wait ing ...");
     }
@@ -50,6 +53,12 @@ public class OneController extends OpMode {
             )
         );
         */
+
+        if (gamepad1.a) {
+            intake.setPosition(1);
+        } else if (gamepad1.b) {
+            intake.setPosition(0);
+        }
     }
 
     @Override
