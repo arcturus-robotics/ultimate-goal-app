@@ -100,7 +100,7 @@ public class PewPew extends LinearOpMode {
         // fun!
         drive.followTrajectory(traj3);
 
-        // for (Pew pew : pews) { ... }
+        // this is used between each pew
         double strafeRightDistance = 2;
         // not sure if you can reuse trajectories multiple times but let's find out
         Trajectory pewTraj = drive.trajectoryBuilder(traj3.end(), true).strafeRight(strafeRightDistance).build();
