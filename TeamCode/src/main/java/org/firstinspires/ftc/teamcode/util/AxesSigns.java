@@ -18,4 +18,16 @@ public enum AxesSigns {
     AxesSigns(int bVal) {
         this.bVal = bVal;
     }
+
+    public int getX() {
+        return this.bVal & 0b100;
+    }
+
+    public int getY() {
+        return (this.bVal & 0b010) << 1;
+    }
+
+    public int getZ() {
+        return (this.bVal & 0b001) << 2;
+    }
 }

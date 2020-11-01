@@ -26,7 +26,7 @@ public class BNO055IMUUtil {
             int axisMapConfig = 0;
             axisMapConfig |= (indices[0] << 4);
             axisMapConfig |= (indices[1] << 2);
-            axisMapConfig |= (indices[2] << 0);
+            axisMapConfig |= (indices[2]);
 
             // the BNO055 driver flips the first orientation vector so we also flip here
             int axisMapSign = signs.bVal ^ (0b100 >> indices[0]);
