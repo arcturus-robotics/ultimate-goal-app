@@ -33,9 +33,9 @@ public class PewPew extends LinearOpMode {
         drive.followTrajectory(traj);
 
         // scanned height of the rings
-        // 0 = first square
-        // 1 = second square
-        // 4 = third square
+        // 0 = first square (a)
+        // 1 = second square (b)
+        // 4 = third square (c)
         // TODO: dont hardcode this (see next TODO)
         RingStackHeight height = RingStackHeight.ZERO;
 
@@ -44,25 +44,31 @@ public class PewPew extends LinearOpMode {
         // make your way downtown to the zones to drop off your rings in different ways depending on
         // the height of the ring stack or something
         boolean strafeRight = false;
+        switch (height) {
+            case ZERO:
+            case FOUR:
+                // strafe right to the wall (coolishly)
+                strafeRight = true;
+                break;
+            default:
+                break;
+        }
         double forwardDistance = 0;
         switch (height) {
             case ZERO:
-                // strafe right to the wall (coolishly)
-                strafeRight = true;
                 // utilize your recently acquired passport and go to the a zone
                 forwardDistance = 5;
                 break;
             case ONE:
-                // no strafing is required for this maneuver
+                // no strafing is required for this maneuver..
                 // enter the b zone (highly illegal but it must be done)
                 forwardDistance = 10;
                 break;
             case FOUR:
-                // strafe like in the zero branch but i dont know java well enough to know
-                // if theres a way to say this without code duplication sorry :(
-                strafeRight = true;
                 // you're going to brazil (c)
                 forwardDistance = 15;
+                break;
+            default:
                 break;
         }
         TrajectoryBuilder traj2Builder = drive.trajectoryBuilder(traj.end(), true);
