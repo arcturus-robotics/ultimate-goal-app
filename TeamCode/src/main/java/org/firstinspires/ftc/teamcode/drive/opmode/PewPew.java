@@ -50,8 +50,6 @@ public class PewPew extends LinearOpMode {
                 // strafe right to the wall (coolishly)
                 strafeRight = true;
                 break;
-            default:
-                break;
         }
         double forwardDistance = 0;
         switch (height) {
@@ -67,8 +65,6 @@ public class PewPew extends LinearOpMode {
             case FOUR:
                 // you're going to brazil (c)
                 forwardDistance = 15;
-                break;
-            default:
                 break;
         }
         TrajectoryBuilder traj2Builder = drive.trajectoryBuilder(traj.end(), true);
