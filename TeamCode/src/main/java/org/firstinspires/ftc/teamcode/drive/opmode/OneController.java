@@ -33,10 +33,10 @@ public class OneController extends OpMode {
     @Override
     public void loop() {
         // calculate motor numbers (very important)
-        double leftFront = -Range.clip(gamepad1.left_stick_y + gamepad1.left_stick_x, -1, 1);
-        double leftRear = -Range.clip(gamepad1.left_stick_y - gamepad1.right_stick_x, -1, 1);
-        double rightRear = -Range.clip(gamepad1.right_stick_y + gamepad1.left_stick_x, -1, 1);
-        double rightFront = -Range.clip(gamepad1.right_stick_y - gamepad1.right_stick_x, -1, 1);
+        double leftFront = -Range.clip(gamepad1.left_stick_y - gamepad1.left_stick_x, -1, 1);
+        double leftRear = -Range.clip(gamepad1.left_stick_y + gamepad1.right_stick_x, -1, 1);
+        double rightRear = -Range.clip(gamepad1.right_stick_y - gamepad1.left_stick_x, -1, 1);
+        double rightFront = -Range.clip(gamepad1.right_stick_y + gamepad1.right_stick_x, -1, 1);
 
         // Set the power of each motor to the values calculated above (very obscure)
         drive.setMotorPowers(leftFront, leftRear, rightRear, rightFront);
