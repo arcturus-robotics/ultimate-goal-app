@@ -105,7 +105,8 @@ public class ArcturusMecanumDrive extends MecanumDrive {
 
         poseHistory = new ArrayList<>();
 
-        LynxModuleUtil.ensureMinimumFirmwareVersion(hardwareMap);
+        // TODO: fix this and add it back
+        //LynxModuleUtil.ensureMinimumFirmwareVersion(hardwareMap);
 
         for (LynxModule module : hardwareMap.getAll(LynxModule.class)) {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
