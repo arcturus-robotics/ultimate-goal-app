@@ -54,11 +54,11 @@ public class OneController extends OpMode {
         */
 
         if (gamepad1.a) {
-            intake.setPower(-1);
+            intake.setPower(1);
         } else if (gamepad1.b) {
             intake.setPower(0);
         } else if (gamepad1.y) {
-            intake.setPower(1);
+            intake.setPower(-1);
         }
     }
 
