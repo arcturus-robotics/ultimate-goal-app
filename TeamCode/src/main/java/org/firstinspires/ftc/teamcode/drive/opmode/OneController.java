@@ -33,18 +33,17 @@ public class OneController extends OpMode {
     @Override
     public void loop() {
         // calculate motor numbers (very important)
-        double leftFront = -(gamepad1.left_stick_y - gamepad1.left_stick_x);
-        double leftRear = -(gamepad1.left_stick_y + gamepad1.right_stick_x);
-        double rightRear = -(gamepad1.right_stick_y - gamepad1.left_stick_x);
-        double rightFront = -(gamepad1.right_stick_y + gamepad1.right_stick_x);
+        double leftFront = -Range.clip(gamepad1.left_stick_y + gamepad1.left_stick_x, -1, 1);
+        double leftRear = -Range.clip(gamepad1.left_stick_y - gamepad1.right_stick_x, -1, 1);
+        double rightRear = -Range.clip(gamepad1.right_stick_y + gamepad1.left_stick_x, -1, 1);
+        double rightFront = -Range.clip(gamepad1.right_stick_y - gamepad1.right_stick_x, -1, 1);
 
         // Set the power of each motor to the values calculated above (very obscure)
         drive.setMotorPowers(leftFront, leftRear, rightRear, rightFront);
 
         /*
-        it would be nice to know what this means
-        my guess: left stick is forward/backward/left/right movement and right stick is turning
-                  because blah blah blah x, y, rotation
+        left stick = translate
+        right stick = rotate
         drive.setWeightedDrivePower(
             new Pose2d(
                 -gamepad1.left_stick_y,
