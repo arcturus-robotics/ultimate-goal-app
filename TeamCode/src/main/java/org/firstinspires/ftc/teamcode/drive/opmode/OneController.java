@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.drive.ArcturusMecanumDrive;
+import org.firstinspires.ftc.teamcode.drive.ArcturusDrive;
 
 /**
  * A teleop for use with a single controller.
@@ -14,12 +14,12 @@ import org.firstinspires.ftc.teamcode.drive.ArcturusMecanumDrive;
  */
 @TeleOp(group = "drive")
 public class OneController extends OpMode {
-    private ArcturusMecanumDrive drive;
+    private ArcturusDrive drive;
     private CRServo intake;
 
     @Override
     public void init() {
-        drive = new ArcturusMecanumDrive(hardwareMap);
+        drive = new ArcturusDrive(hardwareMap);
         intake = hardwareMap.get(CRServo.class, "intake");
 
         telemetry.addData("statuis", "wait ing ...");

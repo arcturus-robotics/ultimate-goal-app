@@ -7,14 +7,14 @@ import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.drive.ArcturusMecanumDrive;
+import org.firstinspires.ftc.teamcode.drive.ArcturusDrive;
 import org.firstinspires.ftc.teamcode.util.RingStackHeight;
 
 @Autonomous(group = "drive")
 public class PewPew extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        ArcturusMecanumDrive drive = new ArcturusMecanumDrive(hardwareMap);
+        ArcturusDrive drive = new ArcturusDrive(hardwareMap);
 
         waitForStart();
 

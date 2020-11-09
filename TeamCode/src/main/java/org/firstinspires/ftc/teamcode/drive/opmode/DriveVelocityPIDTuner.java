@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.teamcode.drive.DriveConstants;
-import org.firstinspires.ftc.teamcode.drive.ArcturusMecanumDrive;
+import org.firstinspires.ftc.teamcode.drive.ArcturusDrive;
 
 import java.util.List;
 
@@ -55,7 +55,7 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
 
     private FtcDashboard dashboard = FtcDashboard.getInstance();
 
-    private ArcturusMecanumDrive drive;
+    private ArcturusDrive drive;
 
     enum Mode {
         DRIVER_MODE,
@@ -86,7 +86,7 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
 
         telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
 
-        drive = new ArcturusMecanumDrive(hardwareMap);
+        drive = new ArcturusDrive(hardwareMap);
 
         mode = Mode.TUNING_MODE;
 
