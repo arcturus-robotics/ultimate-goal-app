@@ -27,7 +27,6 @@ import org.firstinspires.ftc.teamcode.drive.ArcturusDrive;
 @Config
 @Autonomous(group = "drive")
 public class BackAndForth extends LinearOpMode {
-
     public static double DISTANCE = 50;
 
     @Override
