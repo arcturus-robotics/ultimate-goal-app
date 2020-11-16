@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.drive.opmode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.drive.ArcturusDrive;
@@ -15,14 +16,27 @@ import org.firstinspires.ftc.teamcode.drive.ArcturusDrive;
 @TeleOp(group = "drive")
 public class OneController extends OpMode {
     private ArcturusDrive drive;
-    private CRServo intake;
+
+    private DcMotorEx leftShooter, rightShooter;
+    private CRServo lowerIntake;
+    private CRServo upperIntake;
+
+
+    //variable used for debugging
+    double shooterSpeed = 0;
 
     @Override
     public void init() {
         drive = new ArcturusDrive(hardwareMap);
-        intake = hardwareMap.get(CRServo.class, "intake");
 
-        telemetry.addData("statuis", "wait ing ...");
+        lowerIntake = hardwareMap.get(CRServo.class, "lowerIntake");
+        upperIntake = hardwareMap.get(CRServo.class, "upperIntake");
+
+        leftShooter = hardwareMap.get(DcMotorEx.class, "leftShooter");
+        rightShooter = hardwareMap.get(DcMotorEx.class, "rightShooter");
+
+
+        telemetry.addData("statis", "waiting ...");
     }
 
     @Override
@@ -34,7 +48,7 @@ public class OneController extends OpMode {
     public void loop() {
         // calculate motor numbers (very important)
         double leftFront = -Range.clip(gamepad1.left_stick_y - gamepad1.left_stick_x, -1, 1);
-        double leftRear = -Range.clip(gamepad1.left_stick_y + gamepad1.right_stick_x, -1, 1);
+        double leftRear = -Range.clip(  gamepad1.left_stick_y + gamepad1.right_stick_x, -1, 1);
         double rightRear = -Range.clip(gamepad1.right_stick_y - gamepad1.left_stick_x, -1, 1);
         double rightFront = -Range.clip(gamepad1.right_stick_y + gamepad1.right_stick_x, -1, 1);
 
@@ -54,16 +68,53 @@ public class OneController extends OpMode {
         */
 
         if (gamepad1.a) {
-            intake.setPower(1);
+            upperIntake.setPower(1);
+            lowerIntake.setPower(-1);
         } else if (gamepad1.b) {
-            intake.setPower(0);
+            upperIntake.setPower(0);
+            lowerIntake.setPower(0);
         } else if (gamepad1.y) {
-            intake.setPower(-1);
+            upperIntake.setPower(-1);
+            lowerIntake.setPower(1);
         }
+
+        //debugging motor speed due to the high motor speed making the gear connection poor
+        if (gamepad1.dpad_down){
+            shooterSpeed += -0.01;
+            shooterSpeed = Math.max(-1, Math.min(shooterSpeed, 1));
+        }
+        if (gamepad1.dpad_up) {
+            shooterSpeed += 0.01;
+            shooterSpeed = Math.max(-1, Math.min(shooterSpeed, 1));
+        }
+
+        if (gamepad1.x) {
+            leftShooter.setPower(-shooterSpeed);
+            rightShooter.setPower(shooterSpeed);
+        }
+        else {
+            leftShooter.setPower(0);
+            rightShooter.setPower(0);
+        }
+
+        //form of motor control for later uses
+        /*
+        if (gamepad1.x) {
+            leftShooter.setPower(-1);
+            rightShooter.setPower(1);
+        }
+        else {
+            leftShooter.setPower(0);
+            rightShooter.setPower(0);
+        }
+        */
+
+        telemetry.addData("Motor Speed ", shooterSpeed ) ;
+
     }
 
     @Override
     public void stop() {
-        telemetry.addData("staatus", "stopped..");
+        telemetry.addData("status", "stopped..");
     }
 }
