@@ -21,7 +21,6 @@ public class OneController extends OpMode {
     private CRServo lowerIntake;
     private CRServo upperIntake;
 
-
     //variable used for debugging
     double shooterSpeed = 0;
 
@@ -34,7 +33,6 @@ public class OneController extends OpMode {
 
         leftShooter = hardwareMap.get(DcMotorEx.class, "leftShooter");
         rightShooter = hardwareMap.get(DcMotorEx.class, "rightShooter");
-
 
         telemetry.addData("statis", "waiting ...");
     }
@@ -79,7 +77,7 @@ public class OneController extends OpMode {
         }
 
         //debugging motor speed due to the high motor speed making the gear connection poor
-        if (gamepad1.dpad_down){
+        if (gamepad1.dpad_down) {
             shooterSpeed += -0.01;
             shooterSpeed = Math.max(-1, Math.min(shooterSpeed, 1));
         }
@@ -109,8 +107,7 @@ public class OneController extends OpMode {
         }
         */
 
-        telemetry.addData("Motor Speed ", shooterSpeed ) ;
-
+        telemetry.addData("Motor Speed", shooterSpeed);
     }
 
     @Override
