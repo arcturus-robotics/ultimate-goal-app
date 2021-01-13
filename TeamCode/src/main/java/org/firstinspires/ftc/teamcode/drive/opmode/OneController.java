@@ -20,6 +20,7 @@ public class OneController extends OpMode {
     private DcMotorEx leftShooter, rightShooter;
     private CRServo lowerIntake;
     private CRServo upperIntake;
+    private CRServo ringPusher;
 
     //variable used for debugging
     double shooterSpeed = 0;
@@ -30,6 +31,7 @@ public class OneController extends OpMode {
 
         lowerIntake = hardwareMap.get(CRServo.class, "lowerIntake");
         upperIntake = hardwareMap.get(CRServo.class, "upperIntake");
+        ringPusher = hardwareMap.get(CRServo.class, "ringPusher");
 
         leftShooter = hardwareMap.get(DcMotorEx.class, "leftShooter");
         rightShooter = hardwareMap.get(DcMotorEx.class, "rightShooter");
