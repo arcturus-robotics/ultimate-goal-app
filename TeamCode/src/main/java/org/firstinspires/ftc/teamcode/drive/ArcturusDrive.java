@@ -18,8 +18,11 @@ import com.acmerobotics.roadrunner.profile.MotionProfileGenerator;
 import com.acmerobotics.roadrunner.profile.MotionState;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
-import com.acmerobotics.roadrunner.trajectory.constraints.DriveConstraints;
-import com.acmerobotics.roadrunner.trajectory.constraints.MecanumConstraints;
+import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
+import com.acmerobotics.roadrunner.trajectory.constraints.AngularVelocityConstraint;
+import com.acmerobotics.roadrunner.trajectory.constraints.MecanumVelocityConstraint;
+import com.acmerobotics.roadrunner.trajectory.constraints.TranslationalVelocityConstraint;
+import com.acmerobotics.roadrunner.trajectory.constraints.ProfileAccelerationConstraint;
 import com.acmerobotics.roadrunner.util.NanoClock;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.lynx.LynxModule;
@@ -36,7 +39,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.firstinspires.ftc.teamcode.drive.DriveConstants.BASE_CONSTRAINTS;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MOTOR_VELO_PID;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.RUN_USING_ENCODER;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.TRACK_WIDTH;
@@ -75,7 +77,8 @@ public class ArcturusDrive extends MecanumDrive {
     private MotionProfile turnProfile;
     private double turnStart;
 
-    private DriveConstraints constraints;
+    private MinVelocityConstraint velocityConstraint;
+    private ProfileAccelerationConstraint accelerationConstraint;
     private TrajectoryFollower follower;
 
     private List<Pose2d> poseHistory;
@@ -99,7 +102,11 @@ public class ArcturusDrive extends MecanumDrive {
         turnController = new PIDFController(HEADING_PID);
         turnController.setInputBounds(0, 2 * Math.PI);
 
-        constraints = new MecanumConstraints(BASE_CONSTRAINTS, TRACK_WIDTH);
+        velocityConstraint = new MinVelocityConstraint(Arrays.asList(
+            DriveConstants.ANGULAR_VELOCITY_CONSTRAINT,
+            DriveConstants.MECANUM_VELOCITY_CONSTRAINT
+        ));
+        accelerationConstraint = DriveConstants.PROFILE_ACCELERATION_CONSTRAINT;
         follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
                 new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.5);
 
@@ -154,15 +161,15 @@ public class ArcturusDrive extends MecanumDrive {
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose) {
-        return new TrajectoryBuilder(startPose, constraints);
+        return new TrajectoryBuilder(startPose, velocityConstraint, accelerationConstraint);
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose, boolean reversed) {
-        return new TrajectoryBuilder(startPose, reversed, constraints);
+        return new TrajectoryBuilder(startPose, reversed, velocityConstraint, accelerationConstraint);
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose, double startHeading) {
-        return new TrajectoryBuilder(startPose, startHeading, constraints);
+        return new TrajectoryBuilder(startPose, startHeading, velocityConstraint, accelerationConstraint);
     }
 
     public void turnAsync(double angle) {
@@ -173,9 +180,9 @@ public class ArcturusDrive extends MecanumDrive {
         turnProfile = MotionProfileGenerator.generateSimpleMotionProfile(
                 new MotionState(heading, 0, 0, 0),
                 new MotionState(heading + angle, 0, 0, 0),
-                constraints.maxAngVel,
-                constraints.maxAngAccel,
-                constraints.maxAngJerk
+                DriveConstants.MAX_ANGULAR_VELOCITY,
+                DriveConstants.MAX_ANGULAR_ACCELERATION,
+                DriveConstants.MAX_ANGULAR_JERK
         );
 
         turnStart = clock.seconds();
