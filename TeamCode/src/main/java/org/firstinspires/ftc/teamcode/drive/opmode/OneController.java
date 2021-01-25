@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.drive.opmode;
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -42,6 +43,7 @@ public class OneController extends OpMode {
     @Override
     public void start() {
         telemetry.addData("Status", "STARTED!!");
+        drive.setPoseEstimate(new Pose2d(-5.0, -35.0, 0.0));
     }
 
     @Override
