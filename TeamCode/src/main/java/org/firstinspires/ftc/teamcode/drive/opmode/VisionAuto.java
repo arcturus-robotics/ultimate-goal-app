@@ -7,7 +7,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 @Autonomous(group = "drive")
-public class MeWhenISee extends LinearOpMode {
+public class VisionAuto extends LinearOpMode {
     private ArcturusVision vision;
 
     @Override
