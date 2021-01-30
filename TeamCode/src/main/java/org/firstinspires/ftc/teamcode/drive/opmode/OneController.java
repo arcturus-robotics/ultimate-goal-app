@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.drive.opmode;
 
+import android.text.style.TabStopSpan;
+
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -11,6 +13,7 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 
 import org.firstinspires.ftc.teamcode.drive.ArcturusDrive;
+import org.firstinspires.ftc.teamcode.drive.StandardTrackingWheelLocalizer;
 
 /**
  * A teleop for use with a single controller.
@@ -18,19 +21,20 @@ import org.firstinspires.ftc.teamcode.drive.ArcturusDrive;
  * but it will only use one of them.
  */
 @TeleOp(group = "drive")
-public class OneController extends OpMode {
-    private enum Mode {
+public class OneController extends OpMode{
+    enum Mode {
         MANUAL,
         AUTO,
     }
+    Mode currentMode = Mode.MANUAL;
 
     private ArcturusDrive drive;
 
-    private DcMotorEx leftShooter, rightShooter;
-    private CRServo lowerIntake;
-    private CRServo upperIntake;
+
+
+    private DcMotorEx leftShooter, rightShooter, intake;
     private CRServo ringPusher;
-    private Mode currentMode;
+
 
     private static final Pose2d ORIGIN = new Pose2d(-63.0, -56.0, 0.0);
     private Pose2d targetA = new Pose2d(-5.0, -35.0, 0.0);
@@ -43,8 +47,8 @@ public class OneController extends OpMode {
     public void init() {
         drive = new ArcturusDrive(hardwareMap);
 
-        lowerIntake = hardwareMap.get(CRServo.class, "lowerIntake");
-        upperIntake = hardwareMap.get(CRServo.class, "upperIntake");
+        intake = hardwareMap.get(DcMotorEx.class, "intake");
+
         ringPusher = hardwareMap.get(CRServo.class, "ringPusher");
 
         leftShooter = hardwareMap.get(DcMotorEx.class, "leftShooter");
@@ -87,14 +91,14 @@ public class OneController extends OpMode {
                 */
 
                 if (gamepad1.a) {
-                    upperIntake.setPower(1);
-                    lowerIntake.setPower(-1);
+                    intake.setPower(1);
+
                 } else if (gamepad1.b) {
-                    upperIntake.setPower(0);
-                    lowerIntake.setPower(0);
+                    intake.setPower(0);
+
                 } else if (gamepad1.y) {
-                    upperIntake.setPower(-1);
-                    lowerIntake.setPower(1);
+                    intake.setPower(-1);
+
                 }
 
                 //debugging motor speed due to the high motor speed making the gear connection poor
@@ -138,7 +142,7 @@ public class OneController extends OpMode {
                     Trajectory trajectoryB = drive.trajectoryBuilder(poseEstimate).splineTo(new Vector2d(targetB.getX(), targetB.getY()), targetB.getHeading()).build();
                     drive.followTrajectoryAsync(trajectoryB);
                     currentMode = Mode.AUTO;
-                } 
+                }
 
                 break;
             case AUTO:

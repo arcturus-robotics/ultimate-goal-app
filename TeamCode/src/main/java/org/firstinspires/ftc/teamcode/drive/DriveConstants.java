@@ -72,7 +72,7 @@ public class DriveConstants {
      * acceleration values are required, and the jerk values are optional (setting a jerk of 0.0
      * forces acceleration-limited profiling). All distance units are inches.
      */
-    public static final double MAX_VELOCITY = 30.0;
+    public static final double MAX_VELOCITY = 15.00;
     public static final double MAX_ACCELERATION = 30.0;
     public static final double MAX_JERK = 0.0;
     public static final double MAX_ANGULAR_VELOCITY = Math.PI;
