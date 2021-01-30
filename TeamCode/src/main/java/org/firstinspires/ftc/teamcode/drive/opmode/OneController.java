@@ -21,20 +21,18 @@ import org.firstinspires.ftc.teamcode.drive.StandardTrackingWheelLocalizer;
  * but it will only use one of them.
  */
 @TeleOp(group = "drive")
-public class OneController extends OpMode{
+public class OneController extends OpMode {
     enum Mode {
         MANUAL,
         AUTO,
     }
+
     Mode currentMode = Mode.MANUAL;
 
     private ArcturusDrive drive;
 
-
-
     private DcMotorEx leftShooter, rightShooter, intake;
     private CRServo ringPusher;
-
 
     private static final Pose2d ORIGIN = new Pose2d(-63.0, -56.0, 0.0);
     private Pose2d targetA = new Pose2d(-5.0, -35.0, 0.0);
