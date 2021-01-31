@@ -39,15 +39,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MOTOR_VELO_PID;
-import static org.firstinspires.ftc.teamcode.drive.DriveConstants.RUN_USING_ENCODER;
-import static org.firstinspires.ftc.teamcode.drive.DriveConstants.TRACK_WIDTH;
-import static org.firstinspires.ftc.teamcode.drive.DriveConstants.encoderTicksToInches;
-import static org.firstinspires.ftc.teamcode.drive.DriveConstants.getMotorVelocityF;
-import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kA;
-import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kStatic;
-import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kV;
-
 /*
  * Simple mecanum drive hardware implementation for REV hardware.
  */
@@ -90,7 +81,7 @@ public class ArcturusDrive extends MecanumDrive {
     private Pose2d lastPoseOnTurn;
 
     public ArcturusDrive(HardwareMap hardwareMap) {
-        super(kV, kA, kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
+        super(DriveConstants.kV, DriveConstants.kA, DriveConstants.kStatic, DriveConstants.TRACK_WIDTH, DriveConstants.TRACK_WIDTH, LATERAL_MULTIPLIER);
 
         dashboard = FtcDashboard.getInstance();
         dashboard.setTelemetryTransmissionInterval(25);
@@ -103,10 +94,10 @@ public class ArcturusDrive extends MecanumDrive {
         turnController.setInputBounds(0, 2 * Math.PI);
 
         velocityConstraint = new MinVelocityConstraint(Arrays.asList(
-            DriveConstants.ANGULAR_VELOCITY_CONSTRAINT,
-            DriveConstants.MECANUM_VELOCITY_CONSTRAINT
+                new AngularVelocityConstraint(DriveConstants.MAX_ANGULAR_VELOCITY),
+                new MecanumVelocityConstraint(DriveConstants.MAX_VELOCITY, DriveConstants.TRACK_WIDTH)
         ));
-        accelerationConstraint = DriveConstants.PROFILE_ACCELERATION_CONSTRAINT;
+        accelerationConstraint = new ProfileAccelerationConstraint(DriveConstants.MAX_ACCELERATION);
         follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
                 new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.5);
 
@@ -142,14 +133,14 @@ public class ArcturusDrive extends MecanumDrive {
             motor.setMotorType(motorConfigurationType);
         }
 
-        if (RUN_USING_ENCODER) {
+        if (DriveConstants.RUN_USING_ENCODER) {
             setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 
         setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        if (RUN_USING_ENCODER && MOTOR_VELO_PID != null) {
-            setPIDCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, MOTOR_VELO_PID);
+        if (DriveConstants.RUN_USING_ENCODER && DriveConstants.MOTOR_VELO_PID != null) {
+            setPIDCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, DriveConstants.MOTOR_VELO_PID);
         }
 
         // TODO: reverse any motors using DcMotor.setDirection()
@@ -333,7 +324,7 @@ public class ArcturusDrive extends MecanumDrive {
     public void setPIDCoefficients(DcMotor.RunMode runMode, PIDCoefficients coefficients) {
         for (DcMotorEx motor : motors) {
             motor.setPIDFCoefficients(runMode, new PIDFCoefficients(
-                    coefficients.kP, coefficients.kI, coefficients.kD, getMotorVelocityF()
+                    coefficients.kP, coefficients.kI, coefficients.kD, DriveConstants.getMotorVelocityF()
             ));
         }
     }
@@ -363,7 +354,7 @@ public class ArcturusDrive extends MecanumDrive {
     public List<Double> getWheelPositions() {
         List<Double> wheelPositions = new ArrayList<>();
         for (DcMotorEx motor : motors) {
-            wheelPositions.add(encoderTicksToInches(motor.getCurrentPosition()));
+            wheelPositions.add(DriveConstants.encoderTicksToInches(motor.getCurrentPosition()));
         }
         return wheelPositions;
     }
@@ -372,7 +363,7 @@ public class ArcturusDrive extends MecanumDrive {
     public List<Double> getWheelVelocities() {
         List<Double> wheelVelocities = new ArrayList<>();
         for (DcMotorEx motor : motors) {
-            wheelVelocities.add(encoderTicksToInches(motor.getVelocity()));
+            wheelVelocities.add(DriveConstants.           encoderTicksToInches(motor.getVelocity()));
         }
         return wheelVelocities;
     }
