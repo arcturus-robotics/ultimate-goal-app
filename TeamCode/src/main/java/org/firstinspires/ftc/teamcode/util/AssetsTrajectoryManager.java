@@ -17,7 +17,6 @@ import java.io.InputStream;
  * Set of utilities for loading trajectories from assets (the plugin save location).
  */
 public class AssetsTrajectoryManager {
-
     /**
      * Loads the group config.
      */

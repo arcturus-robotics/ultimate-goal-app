@@ -20,7 +20,6 @@ import com.acmerobotics.roadrunner.trajectory.constraints.ProfileAccelerationCon
  */
 @Config
 public class DriveConstants {
-
     /*
      * These are motor constants that should be listed online for your motors. Test comment
      */

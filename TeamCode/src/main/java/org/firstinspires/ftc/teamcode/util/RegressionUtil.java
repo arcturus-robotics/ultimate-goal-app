@@ -16,7 +16,6 @@ import java.util.List;
  * Various regression utilities.
  */
 public class RegressionUtil {
-
     /**
      * Numerically compute dy/dx from the given x and y values. The returned list is padded to match
      * the length of the original sequences.
