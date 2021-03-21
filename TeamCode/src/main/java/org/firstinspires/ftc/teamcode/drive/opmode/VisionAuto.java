@@ -12,7 +12,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 @Autonomous(group = "drive")
 public class VisionAuto extends LinearOpMode {
-    int x;
     private ArcturusVision vision;
 
     @Override
@@ -53,14 +52,11 @@ public class VisionAuto extends LinearOpMode {
 
                     int i = 0;
                     for (Recognition recognition : updatedRecognitions) {
-
-
                         if (recognition.getLabel().equals("Single")) {
                             telemetry.addData("There is a a single ring detected.", recognition.getLabel());
                         } else if (recognition.getLabel().equals("Quad")) {
                             telemetry.addData("There is a stack of 4 rings", recognition.getLabel());
                         }
-
 
                         telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
                         telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
@@ -73,7 +69,6 @@ public class VisionAuto extends LinearOpMode {
                     if (updatedRecognitions.size() == 0) {
                         telemetry.addData("There are no rings", 0);
                     }
-
 
                     telemetry.update();
                 }
