@@ -86,7 +86,6 @@ public class ManualFeedforwardTuner extends LinearOpMode {
         MotionProfile activeProfile = generateProfile(true);
         double profileStart = clock.seconds();
 
-
         while (!isStopRequested()) {
             telemetry.addData("mode", mode);
 
