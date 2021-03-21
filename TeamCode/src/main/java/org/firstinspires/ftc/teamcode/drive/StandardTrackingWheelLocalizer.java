@@ -29,13 +29,13 @@ import java.util.List;
 @Config
 public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer {
     public static double TICKS_PER_REV = 8192;
-    public static double WHEEL_RADIUS = 2; // in
-    public static double GEAR_RATIO = 1; // output (wheel) speed / input (encoder) speed
+    public static double WHEEL_RADIUS = 0.984251969; // in
+    public static double GEAR_RATIO = 1.0; // output (wheel) speed / input (encoder) speed
 
-    public static double LATERAL_DISTANCE = 17.75; // in; distance between the left and right wheels
-    public static double FORWARD_OFFSET = -11.25; // in; offset of the lateral wheel
+    public static double LATERAL_DISTANCE = 14.8125; // in; distance between the left and right wheels
+    public static double FORWARD_OFFSET = -8.40625; // in; offset of the lateral wheel
 
-    public static double X_MULTIPLIER = 0.9979209979209979;
+    public static double X_MULTIPLIER = 1.0;
     public static double Y_MULTIPLIER = 1.0;
 
     private final Encoder leftEncoder;
