@@ -52,19 +52,24 @@ public class ArcturusDrive extends MecanumDrive {
     public static double VX_WEIGHT = 1;
     public static double VY_WEIGHT = 1;
     public static double OMEGA_WEIGHT = 1;
+
     private final FtcDashboard dashboard;
     private final NanoClock clock;
+
     private final PIDFController turnController;
     private final MinVelocityConstraint velocityConstraint;
     private final ProfileAccelerationConstraint accelerationConstraint;
+
     private final TrajectoryFollower follower;
     private final List<Pose2d> poseHistory;
+
     private final DcMotorEx leftFront;
     private final DcMotorEx leftRear;
     private final DcMotorEx rightRear;
     private final DcMotorEx rightFront;
     private final List<DcMotorEx> motors;
     private final BNO055IMU imu;
+
     private Mode mode;
     private MotionProfile turnProfile;
     private double turnStart;

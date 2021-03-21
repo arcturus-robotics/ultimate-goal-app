@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.drive.opmode;
 
 import java.util.List;
-
+import java.util.Locale;
 import org.firstinspires.ftc.teamcode.drive.ArcturusVision;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -58,15 +58,15 @@ public class VisionAuto extends LinearOpMode {
                             telemetry.addData("There is a stack of 4 rings", recognition.getLabel());
                         }
 
-                        telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
-                        telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+                        telemetry.addData(String.format(new Locale("en", "US"), "label (%d)", i), recognition.getLabel());
+                        telemetry.addData(String.format(new Locale("en", "US"), "  left,top (%d)", i), "%.03f , %.03f",
                                 recognition.getLeft(), recognition.getTop());
-                        telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+                        telemetry.addData(String.format(new Locale("en", "US"), "  right,bottom (%d)", i), "%.03f , %.03f",
                                 recognition.getRight(), recognition.getBottom());
-                        i += 1;
+                        i++;
                     }
 
-                    if (updatedRecognitions.size() == 0) {
+                    if (updatedRecognitions.isEmpty()) {
                         telemetry.addData("There are no rings", 0);
                     }
 
