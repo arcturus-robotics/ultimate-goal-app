@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.drive.ArcturusDrive;
 import org.firstinspires.ftc.teamcode.util.RingStackHeight;
 
 @Autonomous(group = "drive")
-public class PewPew extends LinearOpMode {
+public class LaunchAuto extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         ArcturusDrive drive = new ArcturusDrive(hardwareMap);
@@ -23,14 +23,14 @@ public class PewPew extends LinearOpMode {
         // WARNING: a mess for you
 
         // TODO: use lineTo() or something instead because accuracy
-        Trajectory traj = drive.trajectoryBuilder(new Pose2d())
+        Trajectory traj1 = drive.trajectoryBuilder(new Pose2d())
                 // away from starting line
                 .strafeRight(5)
                 // forward to stack
                 .forward(5)
                 .build();
 
-        drive.followTrajectory(traj);
+        drive.followTrajectory(traj1);
 
         // scanned height of the rings
         // 0 = first square (a)
@@ -67,7 +67,7 @@ public class PewPew extends LinearOpMode {
                 forwardDistance = 15;
                 break;
         }
-        TrajectoryBuilder traj2Builder = drive.trajectoryBuilder(traj.end(), true);
+        TrajectoryBuilder traj2Builder = drive.trajectoryBuilder(traj1.end(), true);
         if (strafeRight) {
             traj2Builder.strafeRight(5);
         }
@@ -95,15 +95,16 @@ public class PewPew extends LinearOpMode {
 
         // fun!
         drive.followTrajectory(traj3);
+        // TODO: shoot?
 
         // this is used between each pew
         double strafeRightDistance = 2;
-        // not sure if you can reuse trajectories multiple times but let's find out
-        Trajectory pewTraj = drive.trajectoryBuilder(traj3.end(), true).strafeRight(strafeRightDistance).build();
-        // TODO: shoot?
-        drive.followTrajectory(pewTraj);
-        // TODO: shoot??
-        drive.followTrajectory(pewTraj);
+        // What does reversed mean. Help
+        Trajectory pewTraj1 = drive.trajectoryBuilder(traj3.end(), true).strafeRight(strafeRightDistance).build();
+        drive.followTrajectory(pewTraj1);
+        // TODO: shoot...... \:grin:
+        Trajectory pewTraj2 = drive.trajectoryBuilder(pewTraj1.end(), true).strafeRight(strafeRightDistance).build();
+        drive.followTrajectory(pewTraj2);
         // TODO: shoot.
     }
 }
