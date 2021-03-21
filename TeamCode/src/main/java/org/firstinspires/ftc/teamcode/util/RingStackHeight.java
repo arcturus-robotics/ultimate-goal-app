@@ -12,7 +12,7 @@ public enum RingStackHeight {
 
     private final int height;
 
-    private RingStackHeight(int height) {
+    RingStackHeight(int height) {
         this.height = height;
     }
 
