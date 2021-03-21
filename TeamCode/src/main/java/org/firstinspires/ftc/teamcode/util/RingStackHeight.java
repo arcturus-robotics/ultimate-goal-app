@@ -10,16 +10,9 @@ public enum RingStackHeight {
     ONE(1),
     FOUR(4);
 
-    private final int height;
+    public final int height;
 
     RingStackHeight(int height) {
         this.height = height;
-    }
-
-    /**
-     * Get the enum as an integer.
-     */
-    public int getHeight() {
-        return height;
     }
 }
