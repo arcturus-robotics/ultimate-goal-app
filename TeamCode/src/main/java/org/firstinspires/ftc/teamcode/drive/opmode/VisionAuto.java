@@ -53,7 +53,7 @@ public class VisionAuto extends LinearOpMode {
                     int i = 0;
                     for (Recognition recognition : updatedRecognitions) {
                         if (recognition.getLabel().equals("Single")) {
-                            telemetry.addData("There is a a single ring detected.", recognition.getLabel());
+                            telemetry.addData("There is a single ring detected.", recognition.getLabel());
                         } else if (recognition.getLabel().equals("Quad")) {
                             telemetry.addData("There is a stack of 4 rings", recognition.getLabel());
                         }
