@@ -89,9 +89,9 @@ public class PewPew extends LinearOpMode {
         double backwardDistance = forwardDistance - 3;
         // the threequel
         Trajectory traj3 = drive.trajectoryBuilder(traj2.end(), true)
-            .strafeLeft(strafeLeftDistance)
-            .back(backwardDistance)
-            .build();
+                .strafeLeft(strafeLeftDistance)
+                .back(backwardDistance)
+                .build();
 
         // fun!
         drive.followTrajectory(traj3);

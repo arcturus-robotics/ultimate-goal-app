@@ -1,15 +1,20 @@
 package org.firstinspires.ftc.teamcode.drive.opmode;
 
 import java.util.List;
+
 import org.firstinspires.ftc.teamcode.drive.ArcturusVision;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 @Autonomous(group = "drive")
 public class VisionAuto extends LinearOpMode {
-    private ArcturusVision vision;
     int x;
+    private ArcturusVision vision;
+
     @Override
     public void runOpMode() {
         // vision (eyeball) but awesome
@@ -38,8 +43,6 @@ public class VisionAuto extends LinearOpMode {
         // for some reason in the original example this was inside an if statement with the exact same condition which is pretty weird tbh
         // so i removed it
         while (opModeIsActive()) {
-
-
             if (vision.tfod != null) {
                 // getUpdatedRecognitions() will return null if no new information is available since
                 // the last time that call was made (quite unfortunate)
@@ -52,11 +55,9 @@ public class VisionAuto extends LinearOpMode {
                     for (Recognition recognition : updatedRecognitions) {
 
 
-                        if (recognition.getLabel() == "Single") {
+                        if (recognition.getLabel().equals("Single")) {
                             telemetry.addData("There is a a single ring detected.", recognition.getLabel());
-                        }
-
-                        else if (recognition.getLabel() == "Quad") {
+                        } else if (recognition.getLabel().equals("Quad")) {
                             telemetry.addData("There is a stack of 4 rings", recognition.getLabel());
                         }
 
@@ -69,11 +70,9 @@ public class VisionAuto extends LinearOpMode {
                         i += 1;
                     }
 
-                    if(updatedRecognitions.size() == 0) {
+                    if (updatedRecognitions.size() == 0) {
                         telemetry.addData("There are no rings", 0);
                     }
-
-
 
 
                     telemetry.update();

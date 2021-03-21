@@ -53,17 +53,10 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kV;
 public class DriveVelocityPIDTuner extends LinearOpMode {
     public static double DISTANCE = 72; // in
 
-    private FtcDashboard dashboard = FtcDashboard.getInstance();
+    private final FtcDashboard dashboard = FtcDashboard.getInstance();
 
     private ArcturusDrive drive;
-
-    enum Mode {
-        DRIVER_MODE,
-        TUNING_MODE
-    }
-
     private Mode mode;
-
     private double lastKp = MOTOR_VELO_PID.kP;
     private double lastKi = MOTOR_VELO_PID.kI;
     private double lastKd = MOTOR_VELO_PID.kD;
@@ -174,5 +167,10 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
 
             telemetry.update();
         }
+    }
+
+    enum Mode {
+        DRIVER_MODE,
+        TUNING_MODE
     }
 }

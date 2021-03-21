@@ -12,10 +12,10 @@ public class BNO055IMUUtil {
      * Remap BNO055 IMU axes and signs. For reference, the default order is {@link AxesOrder#ZYX}.
      * Call after {@link BNO055IMU#initialize(BNO055IMU.Parameters)}. Although this isn't
      * mentioned in the datasheet, the axes order appears to affect the onboard sensor fusion.
-     *
+     * <p>
      * Adapted from <a href="https://ftcforum.usfirst.org/forum/ftc-technology/53812-mounting-the-revhub-vertically?p=56587#post56587">this post</a>.
      *
-     * @param imu IMU
+     * @param imu   IMU
      * @param order axes order
      * @param signs axes signs
      */

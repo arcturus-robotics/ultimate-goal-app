@@ -52,32 +52,22 @@ public class ArcturusDrive extends MecanumDrive {
     public static double VX_WEIGHT = 1;
     public static double VY_WEIGHT = 1;
     public static double OMEGA_WEIGHT = 1;
-
-    public enum Mode {
-        IDLE,
-        TURN,
-        FOLLOW_TRAJECTORY
-    }
-
-    private FtcDashboard dashboard;
-    private NanoClock clock;
-
+    private final FtcDashboard dashboard;
+    private final NanoClock clock;
     private Mode mode;
-
-    private PIDFController turnController;
+    private final PIDFController turnController;
     private MotionProfile turnProfile;
     private double turnStart;
-
-    private MinVelocityConstraint velocityConstraint;
-    private ProfileAccelerationConstraint accelerationConstraint;
-    private TrajectoryFollower follower;
-
-    private List<Pose2d> poseHistory;
-
-    private DcMotorEx leftFront, leftRear, rightRear, rightFront;
-    private List<DcMotorEx> motors;
-    private BNO055IMU imu;
-
+    private final MinVelocityConstraint velocityConstraint;
+    private final ProfileAccelerationConstraint accelerationConstraint;
+    private final TrajectoryFollower follower;
+    private final List<Pose2d> poseHistory;
+    private final DcMotorEx leftFront;
+    private final DcMotorEx leftRear;
+    private final DcMotorEx rightRear;
+    private final DcMotorEx rightFront;
+    private final List<DcMotorEx> motors;
+    private final BNO055IMU imu;
     private Pose2d lastPoseOnTurn;
 
     public ArcturusDrive(HardwareMap hardwareMap) {
@@ -363,7 +353,7 @@ public class ArcturusDrive extends MecanumDrive {
     public List<Double> getWheelVelocities() {
         List<Double> wheelVelocities = new ArrayList<>();
         for (DcMotorEx motor : motors) {
-            wheelVelocities.add(DriveConstants.           encoderTicksToInches(motor.getVelocity()));
+            wheelVelocities.add(DriveConstants.encoderTicksToInches(motor.getVelocity()));
         }
         return wheelVelocities;
     }
@@ -379,5 +369,11 @@ public class ArcturusDrive extends MecanumDrive {
     @Override
     public double getRawExternalHeading() {
         return imu.getAngularOrientation().firstAngle;
+    }
+
+    public enum Mode {
+        IDLE,
+        TURN,
+        FOLLOW_TRAJECTORY
     }
 }
