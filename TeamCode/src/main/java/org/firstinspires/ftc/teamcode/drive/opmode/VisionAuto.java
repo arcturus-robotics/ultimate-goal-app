@@ -15,10 +15,8 @@ public class VisionAuto extends LinearOpMode {
         // vision (eyeball) but awesome
         vision = new ArcturusVision(hardwareMap);
 
-        /**
-         * Activate TensorFlow Object Detection before we wait for the start command.
-         * Do it here so that the Camera Stream window will have the TensorFlow annotations visible.
-         **/
+        // Activate TensorFlow Object Detection before we wait for the start command.
+        // Do it here so that the Camera Stream window will have the TensorFlow annotations visible.
         if (vision.tfod != null) {
             vision.tfod.activate();
             // The TensorFlow software will scale the input images from the camera to a lower resolution.
