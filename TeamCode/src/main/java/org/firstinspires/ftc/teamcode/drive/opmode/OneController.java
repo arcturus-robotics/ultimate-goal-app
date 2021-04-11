@@ -26,17 +26,16 @@ public class OneController extends OpMode {
     private final Pose2d targetA = new Pose2d(-5.0, -35.0, 0.0);
     private final Pose2d targetB = new Pose2d(0.0, -12.0, Math.PI);
     Mode currentMode = Mode.MANUAL;
-    //variable used for debugging
-    double shooterSpeed = 0;
     private ArcturusDrive drive;
-    private DcMotorEx leftShooter, rightShooter, intake;
+    private DcMotorEx leftShooter, rightShooter, frontIntake, backIntake;
     private CRServo ringPusher;
 
     @Override
     public void init() {
         drive = new ArcturusDrive(hardwareMap);
 
-        intake = hardwareMap.get(DcMotorEx.class, "intake");
+        frontIntake = hardwareMap.get(DcMotorEx.class, "frontIntake");
+        backIntake = hardwareMap.get(DcMotorEx.class, "backIntake");
 
         ringPusher = hardwareMap.get(CRServo.class, "ringPusher");
 
@@ -80,44 +79,23 @@ public class OneController extends OpMode {
                 */
 
                 if (gamepad1.a) {
-                    intake.setPower(1);
+                    frontIntake.setPower(1);
+                    backIntake.setPower(-1);
                 } else if (gamepad1.b) {
-                    intake.setPower(0);
+                    frontIntake.setPower(0);
+                    backIntake.setPower(0);
                 } else if (gamepad1.y) {
-                    intake.setPower(-1);
-                }
-
-                //debugging motor speed due to the high motor speed making the gear connection poor
-                if (gamepad1.dpad_down) {
-                    shooterSpeed += -0.01;
-                    shooterSpeed = Math.max(-1, Math.min(shooterSpeed, 1));
-                }
-                if (gamepad1.dpad_up) {
-                    shooterSpeed += 0.01;
-                    shooterSpeed = Math.max(-1, Math.min(shooterSpeed, 1));
+                    frontIntake.setPower(-1);
+                    frontIntake.setPower(1);
                 }
 
                 if (gamepad1.x) {
-                    leftShooter.setPower(-shooterSpeed);
-                    rightShooter.setPower(shooterSpeed);
+                    leftShooter.setPower(-1);
+                    rightShooter.setPower(1);
                 } else {
                     leftShooter.setPower(0);
                     rightShooter.setPower(0);
                 }
-
-                //form of motor control for later uses
-                /*
-                if (gamepad1.x) {
-                    leftShooter.setPower(-1);
-                    rightShooter.setPower(1);
-                }
-                else {
-                    leftShooter.setPower(0);
-                    rightShooter.setPower(0);
-                }
-                */
-
-                telemetry.addData("Motor Speed", shooterSpeed);
 
                 if (gamepad1.left_bumper) {
                     Trajectory trajectoryA = drive.trajectoryBuilder(poseEstimate).splineTo(new Vector2d(targetA.getX(), targetA.getY()), targetA.getHeading()).build();
