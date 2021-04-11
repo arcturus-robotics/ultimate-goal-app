@@ -2,20 +2,26 @@ package org.firstinspires.ftc.teamcode.drive.opmode;
 
 import java.util.List;
 import java.util.Locale;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import org.firstinspires.ftc.teamcode.drive.ArcturusVision;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import org.firstinspires.ftc.teamcode.drive.ArcturusDrive;
 
 @Autonomous(group = "drive")
 public class VisionAuto extends LinearOpMode {
+    private static final Pose2d ORIGIN = new Pose2d(-63.0, -56.0, 0.0);
+
+    private ArcturusDrive drive;
     private ArcturusVision vision;
 
     @Override
     public void runOpMode() {
+        // Dri
+        drive = new ArcturusDrive(hardwareMap);
         // vision (eyeball) but awesome
         vision = new ArcturusVision(hardwareMap);
 
@@ -39,6 +45,14 @@ public class VisionAuto extends LinearOpMode {
 
         waitForStart();
 
+        drive.setPoseEstimate(ORIGIN);
+
+        // none of these trajectory numbers are right
+        Trajectory trajectory0 = drive.trajectoryBuilder(new Pose2d())
+            .splineTo(new Vector2d(0, 0), 0)
+            .build();
+        drive.followTrajectory(trajectory0);
+
         // for some reason in the original example this was inside an if statement with the exact same condition which is pretty weird tbh
         // so i removed it
         while (opModeIsActive()) {
@@ -47,27 +61,43 @@ public class VisionAuto extends LinearOpMode {
                 // the last time that call was made (quite unfortunate)
                 List<Recognition> updatedRecognitions = vision.tfod.getUpdatedRecognitions();
                 if (updatedRecognitions != null) {
-                    telemetry.addData("object detected!", updatedRecognitions.size());
-                    // step through the list of recognitions and display boundary info
-
-                    int i = 0;
-                    for (Recognition recognition : updatedRecognitions) {
-                        if (recognition.getLabel().equals("Single")) {
-                            telemetry.addData("There is a single ring detected.", recognition.getLabel());
-                        } else if (recognition.getLabel().equals("Quad")) {
-                            telemetry.addData("There is a stack of 4 rings", recognition.getLabel());
-                        }
-
-                        telemetry.addData(String.format(new Locale("en", "US"), "label (%d)", i), recognition.getLabel());
-                        telemetry.addData(String.format(new Locale("en", "US"), "  left,top (%d)", i), "%.03f , %.03f",
-                                recognition.getLeft(), recognition.getTop());
-                        telemetry.addData(String.format(new Locale("en", "US"), "  right,bottom (%d)", i), "%.03f , %.03f",
-                                recognition.getRight(), recognition.getBottom());
-                        i++;
-                    }
+                    telemetry.addData("rings detected:", updatedRecognitions.size());
 
                     if (updatedRecognitions.isEmpty()) {
-                        telemetry.addData("There are no rings", 0);
+                        telemetry.addData("no rings detected", 0);
+
+                        Trajectory trajectoryA = drive.trajectoryBuilder(new Pose2d())
+                            .splineTo(new Vector2d(0, 0), 0)
+                            .build();
+                        drive.followTrajectory(trajectoryA);
+                    } else {
+                        // step through the list of recognitions and display boundary info
+                        int i = 0;
+                        for (Recognition recognition : updatedRecognitions) {
+                            if (recognition.getLabel().equals("Single")) {
+                                telemetry.addData("one ring detected", recognition.getLabel());
+
+                                Trajectory trajectoryB = drive.trajectoryBuilder(new Pose2d())
+                                    .splineTo(new Vector2d(0, 0), 0)
+                                    .build();
+                                drive.followTrajectory(trajectoryB);
+                            } else if (recognition.getLabel().equals("Quad")) {
+                                telemetry.addData("four rings detected", recognition.getLabel());
+                                
+                                Trajectory trajectoryC = drive.trajectoryBuilder(new Pose2d())
+                                    .splineTo(new Vector2d(0, 0), 0)
+                                    .build();
+                                drive.followTrajectory(trajectoryC);
+                            }
+
+                            telemetry.addData(String.format(new Locale("en", "US"), "label (%d)", i), recognition.getLabel());
+                            telemetry.addData(String.format(new Locale("en", "US"), "  left,top (%d)", i), "%.03f , %.03f",
+                                    recognition.getLeft(), recognition.getTop());
+                            telemetry.addData(String.format(new Locale("en", "US"), "  right,bottom (%d)", i), "%.03f , %.03f",
+                                    recognition.getRight(), recognition.getBottom());
+
+                            i++;
+                        }
                     }
 
                     telemetry.update();
