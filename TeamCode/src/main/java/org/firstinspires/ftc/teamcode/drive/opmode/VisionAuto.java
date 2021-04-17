@@ -53,13 +53,6 @@ public class VisionAuto extends LinearOpMode {
             .build();
         drive.followTrajectory(trajectory0);
 
-        Trajectory trajectoryX = drive.trajectoryBuilder(new Pose2d())
-            .turn(1.0)
-            .build();
-        Trajectory trajectoryY = drive.trajectoryBuilder(new Pose2d())
-            .turn(-1.0)
-            .build();
-
         // for some reason in the original example this was inside an if statement with the exact same condition which is pretty weird tbh
         // so i removed it
         while (opModeIsActive()) {
@@ -107,8 +100,8 @@ public class VisionAuto extends LinearOpMode {
                         }
                     }
 
-                    drive.followTrajectory(trajectoryX);
-                    drive.followTrajectory(trajectoryY);
+                    drive.turn(1.0);
+                    drive.turn(-1.0);
 
                     telemetry.update();
                 }
